@@ -60,7 +60,7 @@ __version__ = "1.0.4"
 
 
 # Add any URL's to nefarious file lists here:
-NEFARIOUS_FILE_SOURCES = []
+NEFARIOUS_FILE_SOURCES = ['https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/MacKeeper.adf', 'https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/ZipCloud.adf']
 
 # Include Apple's identified Adware files by default.
 # https://support.apple.com/en-us/ht203987
