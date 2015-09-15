@@ -59,8 +59,35 @@ import zlib  # pylint: disable=unused-import
 __version__ = "1.0.4"
 
 
-# Add any URL's to nefarious file lists here:
-NEFARIOUS_FILE_SOURCES = ['https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/MacKeeper.adf', 'https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/ZipCloud.adf', 'https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/AskToolbar.adf', 'https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/AwesomeScreenshot.adf', 'https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/JDIBackup.adf']
+# Add any URLs to nefarious file lists
+# format like this
+#
+#NEFARIOUS_FILE_SOURCES = ["https://blah.com/tacos.adf", "https://blah.com/more-tacos.adf"]
+#
+NEFARIOUS_FILE_SOURCES = [
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/AskToolbar.adf", 
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/AwesomeScreenshot.adf", 
+#"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/BestYouTubeDownloader.adf", 
+#"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/Bundlore.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/ChatZum.adf", 
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/Conduit.adf", 
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/CustomSearch.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/FkCodec.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/Genieo.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/GoPhoto.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/JDIBackup.adf", 
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/ListenToYouTube.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/MacKeeper.adf", 
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/multimalware.adf", 
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/OperatorMac.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/PremierOpinion.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/SaveKeep.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/Spigot.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/VSearch.adf",
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/Vidx-MacVX.adf",  
+"https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/Yontoo.adf"
+#, "https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/ZipCloud.adf"
+]
 
 # Include Apple's identified Adware files by default.
 # https://support.apple.com/en-us/ht203987
