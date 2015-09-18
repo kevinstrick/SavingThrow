@@ -74,7 +74,7 @@ NEFARIOUS_FILE_SOURCES = [
 "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/CustomSearch.adf",
 "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/FkCodec.adf",
 "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Genieo.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/GoPhoto.adf",
+#"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/GoPhoto.adf",
 "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/JDIBackup.adf", 
 "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/ListenToYouTube.adf",
 "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/MacKeeper.adf", 
