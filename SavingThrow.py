@@ -70,33 +70,33 @@ __version__ = "1.1.0"
 #                           "https://blah.com/more-tacos.adf"]
 
 NEFARIOUS_FILE_SOURCES = [
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/AskToolbar.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/AwesomeScreenshot.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/BestYouTubeDownloader.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/ChatZum.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Conduit.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Crossrider.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/CustomSearch.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/FkCodec.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Genieo.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/GoPhoto.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/JDIBackup.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/ListenToYouTube.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/MacKeeper.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/multimalware.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/OperatorMac.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/PremierOpinion.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/SaveKeep.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Spigot.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/VSearch.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Vidx-MacVX.adf",  
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Yontoo.adf"
-, "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/ZipCloud.adf"
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/AskToolbar.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/AwesomeScreenshot.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/BestYouTubeDownloader.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/ChatZum.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Conduit.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Crossrider.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/CustomSearch.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/FkCodec.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Genieo.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/GoPhoto.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/JDIBackup.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/ListenToYouTube.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/MacKeeper.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/multimalware.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/OperatorMac.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/PremierOpinion.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/SaveKeep.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Spigot.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/VSearch.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Vidx-MacVX.adf",  
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Yontoo.adf"
+, "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/ZipCloud.adf"
 ]
 
 # Include Apple's identified Adware files by default.
 # https://support.apple.com/en-us/ht203987
-HT203987_URL = "https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/Apple-HT203987.adf"  # pylint: disable=line-too-long
+HT203987_URL = "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master//Apple-HT203987.adf"  # pylint: disable=line-too-long
 NEFARIOUS_FILE_SOURCES.append(HT203987_URL)
 
 CACHE = "/Library/Application Support/SavingThrow"
