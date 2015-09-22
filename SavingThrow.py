@@ -27,6 +27,10 @@ Modular Adware Extension Attribute and Removal Script. Call with no
 arguments to run as an extension attribute, or with --remove or
 --quarantine to operate as a cleanup tool.
 
+positional arguments:
+  jamf-arguments    Accepts all passed positional arguments (or none) to
+                    allowCasper script usage.
+
 optional arguments:
   -h, --help        show this help message and exit
   -v, --verbose     Print to stdout as well as syslog.
@@ -41,6 +45,7 @@ and ultimately, digests you.
 
 # Import ALL the modules!
 import argparse
+from distutils.version import StrictVersion
 import glob
 import os
 import re
@@ -56,42 +61,42 @@ import zipfile
 import zlib  # pylint: disable=unused-import
 
 
-__version__ = "1.0.4"
+__version__ = "1.1.0"
 
 
 # Add any URLs to nefarious file lists
 # format like this
-#
-#NEFARIOUS_FILE_SOURCES = ["https://blah.com/tacos.adf", "https://blah.com/more-tacos.adf"]
-#
+# NEFARIOUS_FILE_SOURCES = ["https://blah.com/tacos.adf",
+#                           "https://blah.com/more-tacos.adf"]
+
 NEFARIOUS_FILE_SOURCES = [
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/AskToolbar.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/AwesomeScreenshot.adf", 
-#"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/BestYouTubeDownloader.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/ChatZum.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Conduit.adf", 
-#"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Crossrider.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/CustomSearch.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/FkCodec.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Genieo.adf",
-#"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/GoPhoto.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/JDIBackup.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/ListenToYouTube.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/MacKeeper.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/multimalware.adf", 
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/OperatorMac.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/PremierOpinion.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/SaveKeep.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Spigot.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/VSearch.adf",
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Vidx-MacVX.adf",  
-"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Yontoo.adf"
-#, "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/ZipCloud.adf"
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/AskToolbar.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/AwesomeScreenshot.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/BestYouTubeDownloader.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/ChatZum.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Conduit.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Crossrider.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/CustomSearch.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/FkCodec.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Genieo.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/GoPhoto.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/JDIBackup.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/ListenToYouTube.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/MacKeeper.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/multimalware.adf", 
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/OperatorMac.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/PremierOpinion.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/SaveKeep.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Spigot.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/VSearch.adf",
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Vidx-MacVX.adf",  
+"https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/Yontoo.adf"
+, "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/testing/ZipCloud.adf"
 ]
 
 # Include Apple's identified Adware files by default.
 # https://support.apple.com/en-us/ht203987
-HT203987_URL = "https://raw.githubusercontent.com/kevinstrick/AdwareDefinitionFiles/master/Apple-HT203987.adf"  # pylint: disable=line-too-long
+HT203987_URL = "https://raw.githubusercontent.com/SavingThrows/AdwareDefinitionFiles/master/Apple-HT203987.adf"  # pylint: disable=line-too-long
 NEFARIOUS_FILE_SOURCES.append(HT203987_URL)
 
 CACHE = "/Library/Application Support/SavingThrow"
@@ -183,9 +188,35 @@ class AdwareController(object):
                 self.logger.log("Error: No cached copy of %s or other error %s"
                                 % (source, error.message))
         if adware_text:
-            self.adwares.extend(
-                [Adware(adware) for adware in
-                 ElementTree.fromstring(adware_text).findall("Adware")])
+            try:
+                adf_element = ElementTree.fromstring(adware_text)
+            except ElementTree.ParseError as err:
+                logger = Logger()
+                logger.log("ADF at %s is invalid XML (Error: %s)" %
+                           (source, err.message))
+                adf_element = None
+
+            if adf_element is not None:
+                self.warn_if_old_version(adf_element)
+                self.adwares.extend([Adware(adware) for adware in
+                                     adf_element.findall("Adware")])
+
+    def warn_if_old_version(self, adf_element):
+        """Warn the user if the SavingThrow version is older than the ADF.
+
+        An ADF file may optionally specify a minimum "SavingThrowVersion"
+        which is needed for all features to work. The ADF may still work
+        at reduced capacity.
+        """
+        min_version_elem = adf_element.find("SavingThrowVersion")
+        logger = Logger()
+        if min_version_elem is not None:
+            min_version = StrictVersion(min_version_elem.text)
+            if min_version > StrictVersion(__version__):
+                adware_names = ", ".join([name.findtext("AdwareName") for name
+                                          in adf_element.findall("Adware")])
+                logger.log("%s require(s) SavingThrow version %s" %
+                           (adware_names, min_version))
 
     def report_string(self):
         """Generate a nicely formatted string of findings."""
@@ -395,19 +426,76 @@ class Adware(object):
         # First look for regex-confirmed files to prepare for text
         # replacement.
         for tested_file in self.xml.findall("TestedFile"):
-            regex = re.compile(tested_file.findtext("Regex"))
-            replacement_key = tested_file.findtext("ReplacementKey")
-            fnames = glob.glob(tested_file.findtext("File"))
-            for fname in fnames:
-                with open(fname, "r") as afile:
-                    text = afile.read()
+            # Perform a glob and gather the results for all Path elements.
+            paths = set()
+            for path in tested_file.findall("Path"):
+                for pattern in ("*", ".*"):
+                    paths.update(set(glob.glob(os.path.join(path.text,
+                                                            pattern))))
 
-                if re.search(regex, text):
-                    candidates.add(fname)
+            # If provided, get and compile the regexes for filename
+            # searching.
+            fname_regexen = [fregex.text for fregex in
+                             tested_file.findall("FilenameRegex")]
+            compiled_fname_regexen = []
+            if paths and fname_regexen:
+                for fname_regex in fname_regexen:
+                    try:
+                        compiled_fname_regex = re.compile(fname_regex)
+                        compiled_fname_regexen.append(compiled_fname_regex)
+                    except re.error as re_error:
+                        logger.log("Invalid regex: %s with error: %s in ADF "
+                                   "for: %s" % (fname_regex, self.name,
+                                                re_error.message))
+                        continue
+            elif paths and not fname_regex:
+                logger.log("Paths supplied for %s, but no Regex provided. "
+                           "Skipping this TestedFile." % self.name)
+                continue
 
-                    if replacement_key:
-                        self._env[replacement_key] = re.search(regex,
-                                                               text).group(1)
+            # fnames collects full paths to files which match the
+            # FilenameRegex and 'File' elements which glob, for later
+            # content searching should it be specified.
+            fnames = []
+            for fname_search in paths:
+                for compiled_fname_regex in compiled_fname_regexen:
+                    if re.search(compiled_fname_regex, fname_search):
+                        fnames.append(fname_search)
+
+            # Perform a glob and gather the results for all File elements.
+            globs = [glob.glob(fname.text) for fname in
+                     tested_file.findall("File")]
+            fnames.extend([item for glob_list in globs for item in glob_list])
+
+            # Get the regex to search within a file for, if it exists.
+            regexen = [regex.text for regex in tested_file.findall("Regex")]
+            compiled_regexen = []
+            if regexen:
+                for regex in regexen:
+                    try:
+                        compiled_regex = re.compile(regex)
+                        compiled_regexen.append(compiled_regex)
+                    except re.error as re_error:
+                        logger.log("Invalid regex: %s with error: %s in ADF "
+                                   "for: %s" % (regex, self.name,
+                                                re_error.message))
+                        continue
+                # Get the replacement key if one is provided.
+                replacement_key = tested_file.findtext("ReplacementKey")
+
+                for fname in fnames:
+                    with open(fname, "r") as afile:
+                        text = afile.read()
+
+                    for compiled_regex in compiled_regexen:
+                        if re.search(compiled_regex, text):
+                            candidates.add(fname)
+
+                            if replacement_key:
+                                self._env[replacement_key] = re.search(
+                                    regex, text).group(1)
+            else:
+                candidates.update(set(fnames))
 
         # Now look for regular files.
         for std_file in self.xml.findall("File"):
@@ -464,6 +552,9 @@ def build_argparser():
     epilog = ("Roll to save against paralyzation, lest the Gelatinous "
               "Cube anesthetizes, and ultimately, digests you.")
     parser = argparse.ArgumentParser(description=description, epilog=epilog)
+    help_msg = ("Accepts all passed positional arguments (or none) to allow"
+                "Casper script usage.")
+    parser.add_argument("jamf-arguments", nargs="*", help=help_msg)
     parser.add_argument("-v", "--verbose", action="store_true",
                         help="Print to stdout as well as syslog.")
     mode_parser = parser.add_mutually_exclusive_group()
@@ -486,7 +577,9 @@ def main():
 
     # Handle command line arguments.
     parser = build_argparser()
-    args, _ = parser.parse_known_args()
+    # We use the parse_known_args method to avoid having to deal with
+    # any empty arguments Casper may tack onto the end.
+    args = parser.parse_known_args()[0]
 
     # Configure verbose on logger Borg.
     logger = Logger()
